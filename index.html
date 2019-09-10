@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- <meta http-equiv="Pragma" content="no-cache" /> -->
+	<meta charset="UTF-8" />
+	<meta name="Keywords" content="" />
+	<meta name="Description" content="" />
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>ETH Winner</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+
+<body>
+	<div id="page" v-cloak>
+		<header>
+			<button class="switch" @click="visibleLang=true">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-switch"></use>
+				</svg>
+				<span id="lang">{{currentLang.label}}</span>
+			</button>
+			<div class="locale-wrapper" v-show="visibleLang" @click="visibleLang=false">
+				<div class="locale">
+					<div class="locale-item" v-for="item in lang" @click="setCurrentLang(item)">
+						<svg class="icon" aria-hidden="true">
+							<use :xlink:href="item.icon"></use>
+						</svg>
+						<span>{{item.label}}</span>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="logo">
+			<img src="img/logo_home.png">
+		</div>
+		<div class="question">What is Eth winner?</div>
+		<div class="explain">
+			{{translate.gather}}<strong>{{translate.guess}}、</strong><strong>{{translate.profit}}、</strong><strong>{{translate.win}}</strong>{{translate.game}}
+		</div>
+		<div class="title">Eth winner</div>
+		<div class="subtitle">{{translate.decentralization}}</div>
+		<div class="explain">
+			<p>{{translate.indeed}}</p>
+			<p>{{translate.overseas}}</p>
+		</div>
+		<div class="purchase">
+			<svg class="icon double-arrow-down" aria-hidden="true">
+				<use xlink:href="#icon-img_x"></use>
+			</svg>
+			<button class="purchase-gas" @click="visiblePurchase=true">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-icon_ranl_x"></use>
+				</svg>
+				<span>{{translate.buy}}</span>
+			</button>
+		</div>
+		<!-- 第n轮信息 -->
+		<div class="lottery">
+			<div class="section">
+				<div class="section-header">
+					<img src="img/title.png">
+					<span>{{translate.day_win}}</span>
+					<img src="img/title_c.png">
+				</div>
+				<svg class="icon arrow-down" aria-hidden="true">
+					<use xlink:href="#icon-img_xx"></use>
+				</svg>
+				<div class="time" id="daily">{{bigTime}}</div>
+				<div class="count">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-shujzc_icon_qian"></use>
+					</svg>
+					<span class="number">{{lottery.big_money}}</span>
+					<span class="unit">ETH</span>
+				</div>
+			</div>
+			<div class="section">
+				<div class="section-header">
+					<img src="img/title.png">
+					<span>{{translate.last_win}}</span>
+					<img src="img/title_c.png">
+				</div>
+				<svg class="icon arrow-down" aria-hidden="true">
+					<use xlink:href="#icon-img_xx"></use>
+				</svg>
+				<div class="time" id="final">{{smallTime}}</div>
+				<div class="count">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-shujzc_icon_qian"></use>
+					</svg>
+					<span class="number">{{lottery.small_sum_money}}</span>
+					<span class="unit">ETH</span>
+				</div>
+			</div>
+			<div class="today">
+				<div class="today-header">
+					<div class="today-title">
+						<img src="img/title_c.png">
+						<span>{{translate.day_win}}</span>
+					</div>
+					<button class="rules lottery-rule" @click="visibleLotteryRule=true">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-icon_guize"></use>
+						</svg>
+						<span>{{translate.rule}}</span>
+					</button>
+				</div>
+				<div class="list" v-if="smallLottery">
+					<div class="block">
+						<div class="rank">
+							<img src="img/metal1.png" class="metal">
+							<span>NO.1</span>
+						</div>
+						<div class="amount">
+							<img src="img/people.png">
+							<span>{{smallLottery.first_win.count}}</span>
+						</div>
+						<div class="connect">
+							<img src="img/connect.png">
+							<span>{{smallLottery.first_win.wallet_address}}</span>
+						</div>
+						<button class="check" @click="checkLotteryList(1)">
+							<span>{{translate.look_win}}</span>
+							<svg class="icon metal" aria-hidden="true">
+								<use xlink:href="#icon-icon_tiaoz"></use>
+							</svg>
+						</button>
+					</div>
+					<div class="block">
+						<div class="rank">
+							<img src="img/metal2.png" class="metal">
+							<span>NO.2</span>
+						</div>
+						<div class="amount">
+							<img src="img/people.png">
+							<span>{{smallLottery.second_win.count}}</span>
+						</div>
+						<div class="connect">
+							<img src="img/connect.png">
+							<span>{{smallLottery.second_win.wallet_address}}</span>
+						</div>
+						<button class="check" @click="checkLotteryList(2)">
+							<span>{{translate.look_win}}</span>
+							<svg class="icon metal" aria-hidden="true">
+								<use xlink:href="#icon-icon_tiaoz"></use>
+							</svg>
+						</button>
+					</div>
+					<div class="block">
+						<div class="rank">
+							<img src="img/metal3.png" class="metal">
+							<span>NO.3</span>
+						</div>
+						<div class="amount">
+							<img src="img/people.png">
+							<span>{{smallLottery.third_win.count}}</span>
+						</div>
+						<div class="connect">
+							<img src="img/connect.png">
+							<span>{{smallLottery.third_win.wallet_address}}</span>
+						</div>
+						<button class="check" @click="checkLotteryList(3)">
+							<span>{{translate.look_win}}</span>
+							<svg class="icon metal" aria-hidden="true">
+								<use xlink:href="#icon-icon_tiaoz"></use>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="turn">（{{translate.di}}{{lottery.big_round}}{{translate.round}}）</div>
+		</div>
+		<br /><br />
+		<br /><br />
+		<!-- hash竞猜 -->
+		<div class="hash board">
+			<div class="hash-header">
+				<button class="rules game" @click="visibleGameRule=true">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-icon_guize"></use>
+					</svg>
+					<span>{{translate.game_rules}}</span>
+				</button>
+			</div>
+			<div class="hash-title">Hash{{translate.upon}}</div>
+			<!-- <div class="hash-value board-value">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-icon_"></use>
+				</svg>
+				<span>{{translate.di}}<strong>{{currentTurn.round}}</strong>{{translate.round}}，{{currentTurn.c_time}}，{{currentTurn.block_str}}
+				</span>
+				<p>Hex:{{currentTurn.hash}}</p>
+			</div> -->
+			<a :href="`history.html?lang=${currentLang.value}`">
+				<div class="hash-history">{{translate.history}}</div>
+			</a>
+			<div class="turn">（{{translate.di}}{{currentTurn.round}}{{translate.round}}）</div>
+			<!-- </div> -->
+			<!-- 第n轮开奖 -->
+			<!-- <div class="board"> -->
+			<div class="board-title">
+				<img src="img/title.png">
+				<span>{{translate.di}}{{currentTurn.round}}{{translate.round}}{{translate.open_win}}</span>
+				<img src="img/title_c.png">
+			</div>
+			<div class="board-number">{{currentTurn.c_time}}</div>
+			<div class="board-value">
+				<p>{{currentTurn.c_time}}，{{currentTurn.block}}</p>
+				<p>Hex:{{currentTurn.hash}}</p>
+			</div>
+			<div class="timer">
+				<div class="timer-number" v-for="item in currentTurn.number">
+					<span>{{item}}</span>
+				</div>
+			</div>
+			<div class="message">
+				<div class="detail">
+					<div class="detail-left">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-shujzc_icon_rens"></use>
+						</svg>
+						<p class="label">{{translate.win_count}}</p>
+						<p class="value">{{currentLottery.count}}</p>
+					</div>
+					<div class="detail-right">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-icon_qian_x"></use>
+						</svg>
+						<p class="label">{{translate.mean}}</p>
+						<p class="value">{{currentLottery.winnum}}</p>
+					</div>
+				</div>
+				<div class="message-list">
+					<div class="wrapper">
+						<div class="text yellow">{{translate.win_user}}</div>
+						<div class="text yellow">{{translate.award}}</div>
+					</div>
+					<div class="wrapper" v-for="item in currentLottery.list">
+						<div class="text">{{item.pccpath}}</div>
+						<div class="text yellow">{{item.winnum}}ETH</div>
+					</div>
+				</div>
+			</div>
+			<div class="joined">
+				<span>{{translate.has_been}}：</span>
+				<span class="number">{{price.puteht}}</span>
+				<span>EWF</span>
+			</div>
+			<a :href="`betting.html?lang=${currentLang.value}`">
+				<div class="betting">
+					<p>({{price.price}}/{{translate.meici}})</p>
+					<p>{{translate.put}}</p>
+				</div>
+			</a>
+		</div>
+		<div class="navigation">
+			<div class="navigation-title">
+				<img src="img/title.png">
+				<span>{{translate.into}}</span>
+				<img src="img/title_c.png">
+			</div>
+			<div class="navigation-list">
+				<div class="navigation-item-wrapper" @click="visiblePurchase=true">
+					<div class="navigation-item gas">
+						<img src="img/navigation1.png">
+						<p>{{translate.convert}}</p>
+					</div>
+				</div>
+				<div class="navigation-item-wrapper" @click="visibleJoin=true">
+					<div class="navigation-item join">
+						<img src="img/navigation2.png">
+						<p>{{translate.into}}</p>
+					</div>
+				</div>
+				<div class="navigation-item-wrapper" @click="visibleInvite=true">
+					<div class="navigation-item code">
+						<img src="img/navigation3.png">
+						<p>{{translate.code}}</p>
+					</div>
+				</div>
+				<div class="navigation-item-wrapper" @click="visiblePlayRule=true">
+					<div class="navigation-item play">
+						<img src="img/navigation4.png">
+						<p>{{translate.put_rule}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="navigation">
+			<div class="navigation-title">
+				<img src="img/title.png">
+				<span>{{translate.shujutongji}}</span>
+				<img src="img/title_c.png">
+			</div>
+		</div>
+		<div class="tab">
+			<div class="tab-header">
+				<div :class="['tab-header-title',{active:activeTabIndex==0}]" @click="visibleProfit=true">
+					{{translate.my_win}}</div>
+				<div :class="['tab-header-title',{active:activeTabIndex==1}]" @click="visibleStatistics=true">
+					{{translate.statistics}}</div>
+				<div :class="['tab-header-title',{active:activeTabIndex==2}]" @click="visibleMyTeam=true">
+					{{translate.my_team}}</div>
+				<div :class="['tab-header-title',{active:activeTabIndex==3}]" @click="visiblePoint=true">
+					{{translate.jiedian}}</div>
+			</div>
+			<!-- 我的收益 -->
+			<!-- <div class="tab-content" v-show="activeTabIndex==0">
+				<div class="tab-list">
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.next_win}}</span>
+						</div>
+						<div class="value">
+							<span>{{myProfit.hour}}</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.yuqi}}</span>
+						</div>
+						<div class="value">
+							<button @click="settlement">{{translate.settlement}}</button>
+							<span class="number">{{myProfit.expect_profit}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.profit_money}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.static_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.child_money}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.generalize_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.node_money}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.level_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.win_money}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.win_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.money_sum}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.all_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.put_sum}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.order_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.multiple}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.multiple}}</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.multiple_differ}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.out_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.guess_money}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.guess_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.take_count}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{myProfit.yi_ti}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.notake_count}}</span>
+						</div>
+						<div class="value">
+							<button @click="visibleCash=true">{{translate.withdraw}}</button>
+							<span class="number">{{myProfit.wei_ti}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.day_book}}</span>
+						</div>
+						<div class="value">
+							<button
+								@click="window.location.href=`profit.html?lang=${currentLang.value}`">{{translate.look_details}}</button>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- 统计 -->
+			<!-- <div class="tab-content" v-show="activeTabIndex==1">
+				<div class="tab-list">
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.big_sum}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{statistic.big_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.small_sum}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{statistic.small_sum_money}}</span>
+							<span>ETH</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.pcc_bili}}</span>
+						</div>
+						<div class="value">
+							<span class="number">1ETH:{{statistic.proportion}}</span>
+							<span>EWF</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<i></i>
+							<span>{{translate.unset_sum}}</span>
+						</div>
+						<div class="value">
+							<span class="number">{{statistic.pccnum}}</span>
+							<span>EWF</span>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<!-- 我的团队 -->
+			<!-- <div class="tab-content" v-show="activeTabIndex==2">
+				<div class="tab-section">
+					<div class="tab-section-header">
+						<div class="tab-section-title" v-if="myTeam.upgrade">
+							<i></i>
+							<span>{{translate.my_grade}}</span>
+							<img src="img/vip0.png" v-if="myTeam.upgrade.level==0">
+							<img src="img/vip1.png" v-if="myTeam.upgrade.level==1">
+							<img src="img/vip2.png" v-if="myTeam.upgrade.level==2">
+							<img src="img/vip3.png" v-if="myTeam.upgrade.level==3">
+							<img src="img/vip4.png" v-if="myTeam.upgrade.level==4">
+						</div>
+						<div class="publish-count">
+							<span>{{translate.child_count}}:</span>
+							<span class="number">{{myTeam.child_count}}</span>
+						</div>
+					</div>
+					<div v-if="myTeam.upgrade" class="tips">{{myTeam.upgrade.msg}}</div>
+				</div>
+				<div class="tab-section">
+					<div class="tab-section-header">
+						<div class="tab-section-title">
+							<i></i>
+							<span>{{translate.team_please}}</span>
+						</div>
+					</div>
+					<div class="tab-list">
+						<div class="item">
+							<div class="label">
+								<img src="img/vip1.png">{{translate.group_level1}}
+							</div>
+							<div class="value">
+								<span class="number">{{myTeam.vip_1}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<img src="img/vip2.png">{{translate.group_level2}}
+							</div>
+							<div class="value">
+								<span class="number">{{myTeam.vip_2}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<img src="img/vip3.png">{{translate.group_level3}}
+							</div>
+							<div class="value">
+								<span class="number">{{myTeam.vip_3}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<img src="img/vip4.png">{{translate.group_level4}}
+							</div>
+							<div class="value">
+								<span class="number">{{myTeam.vip_4}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="copy">{{translate.copy}}</div>
+			</div> -->
+			<!-- vip统计 -->
+			<!-- <div class="tab-content" v-show="activeTabIndex==3">
+				<div class="tab-list">
+					<div class="item">
+						<div class="label">
+							<img src="img/vip1.png">{{translate.group_level1}}
+						</div>
+						<div class="value">
+							<span class="number">{{vip.allvip_1}}</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<img src="img/vip2.png">{{translate.group_level2}}
+						</div>
+						<div class="value">
+							<span class="number">{{vip.allvip_2}}</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<img src="img/vip3.png">{{translate.group_level3}}
+						</div>
+						<div class="value">
+							<span class="number">{{vip.allvip_3}}</span>
+						</div>
+					</div>
+					<div class="item">
+						<div class="label">
+							<img src="img/vip4.png">{{translate.group_level4}}
+						</div>
+						<div class="value">
+							<span class="number">{{vip.allvip_4}}</span>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		<!-- 我的收益 -->
+		<div :class="['cover',{active:visibleProfit}]">
+			<div class="alert" style="background:#233163">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.my_win}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="tab-list">
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.next_win}}</span>
+							</div>
+							<div class="value">
+								<span>{{myProfit.hour}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.yuqi}}</span>
+							</div>
+							<div class="value">
+								<button @click="settlement">{{translate.settlement}}</button>
+								<span class="number">{{myProfit.expect_profit}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.profit_money}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.static_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.child_money}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.generalize_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.node_money}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.level_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.win_money}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.win_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.money_sum}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.all_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.put_sum}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.order_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.multiple}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.multiple}}</span>
+								<!-- <span>倍</span> -->
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.multiple_differ}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.out_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.guess_money}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.guess_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.take_count}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{myProfit.yi_ti}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.notake_count}}</span>
+							</div>
+							<div class="value">
+								<button @click="visibleCash=true">{{translate.withdraw}}</button>
+								<span class="number">{{myProfit.wei_ti}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.day_book}}</span>
+							</div>
+							<div class="value">
+								<button
+									@click="window.location.href=`profit.html?lang=${currentLang.value}`">{{translate.look_details}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="close-btn" @click="visibleProfit=false"></div>
+			</div>
+		</div>
+		<!-- 统计 -->
+		<div :class="['cover',{active:visibleStatistics}]">
+			<div class="alert" style="background:#233163">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.statistics}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="tab-list">
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.big_sum}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{statistic.big_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.small_sum}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{statistic.small_sum_money}}</span>
+								<span>ETH</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.pcc_bili}}</span>
+							</div>
+							<div class="value">
+								<span class="number">1ETH:{{statistic.proportion}}</span>
+								<span>EWF</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<i></i>
+								<span>{{translate.unset_sum}}</span>
+							</div>
+							<div class="value">
+								<span class="number">{{statistic.pccnum}}</span>
+								<span>EWF</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="close-btn" @click="visibleStatistics=false"></div>
+			</div>
+		</div>
+		<!-- 我的团队 -->
+		<div :class="['cover',{active:visibleMyTeam}]">
+			<div class="alert" style="background:#233163">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.my_team}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="tab-section">
+						<div class="tab-section-header">
+							<div class="tab-section-title" v-if="myTeam.upgrade">
+								<i></i>
+								<span>{{translate.my_grade}}</span>
+								<img src="img/vip0.png" v-if="myTeam.upgrade.level==0">
+								<img src="img/vip1.png" v-if="myTeam.upgrade.level==1">
+								<img src="img/vip2.png" v-if="myTeam.upgrade.level==2">
+								<img src="img/vip3.png" v-if="myTeam.upgrade.level==3">
+								<img src="img/vip4.png" v-if="myTeam.upgrade.level==4">
+							</div>
+							<div class="publish-count">
+								<span>{{translate.child_count}}:</span>
+								<span class="number">{{myTeam.child_count}}</span>
+							</div>
+						</div>
+						<div v-if="myTeam.upgrade" class="tips">{{myTeam.upgrade.msg}}</div>
+					</div>
+					<div class="tab-section">
+						<div class="tab-section-header">
+							<div class="tab-section-title">
+								<i></i>
+								<span>{{translate.team_please}}</span>
+							</div>
+						</div>
+						<div class="tab-list">
+							<div class="item">
+								<div class="label">
+									<img src="img/vip1.png">{{translate.group_level1}}
+								</div>
+								<div class="value">
+									<span class="number">{{myTeam.vip_1}}</span>
+								</div>
+							</div>
+							<div class="item">
+								<div class="label">
+									<img src="img/vip2.png">{{translate.group_level2}}
+								</div>
+								<div class="value">
+									<span class="number">{{myTeam.vip_2}}</span>
+								</div>
+							</div>
+							<div class="item">
+								<div class="label">
+									<img src="img/vip3.png">{{translate.group_level3}}
+								</div>
+								<div class="value">
+									<span class="number">{{myTeam.vip_3}}</span>
+								</div>
+							</div>
+							<div class="item">
+								<div class="label">
+									<img src="img/vip4.png">{{translate.group_level4}}
+								</div>
+								<div class="value">
+									<span class="number">{{myTeam.vip_4}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="copy" @click="copyLink">{{translate.copy}}</div>
+				</div>
+				<div class="close-btn" @click="visibleMyTeam=false"></div>
+			</div>
+		</div>
+		<!-- 节点统计 -->
+		<div :class="['cover',{active:visiblePoint}]">
+			<div class="alert" style="background:#233163">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.jiedian}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="tab-list">
+						<div class="item">
+							<div class="label">
+								<img src="img/vip1.png">{{translate.group_level1}}
+							</div>
+							<div class="value">
+								<span class="number">{{vip.allvip_1}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<img src="img/vip2.png">{{translate.group_level2}}
+							</div>
+							<div class="value">
+								<span class="number">{{vip.allvip_2}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<img src="img/vip3.png">{{translate.group_level3}}
+							</div>
+							<div class="value">
+								<span class="number">{{vip.allvip_3}}</span>
+							</div>
+						</div>
+						<div class="item">
+							<div class="label">
+								<img src="img/vip4.png">{{translate.group_level4}}
+							</div>
+							<div class="value">
+								<span class="number">{{vip.allvip_4}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="close-btn" @click="visiblePoint=false"></div>
+			</div>
+		</div>
+		<!-- 开奖规则 -->
+		<div id="lottery" :class="['cover',{active:visibleLotteryRule}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.rule}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="rule-section">
+						<div class="section-title">{{translate.jackpot}}</div>
+						<div class="section-text">{{translate.day_liu}}</div>
+					</div>
+					<div class="rule-section">
+						<div class="section-title">{{translate.small}}</div>
+						<div class="section-text">{{translate.small_rule}}</div>
+					</div>
+					<div class="rule-section">
+						<div class="section-title">{{translate.big}}</div>
+						<div class="section-text">{{translate.big_rule}}</div>
+					</div>
+				</div>
+				<div class="close-btn" @click="visibleLotteryRule=false"></div>
+			</div>
+		</div>
+		<!-- 游戏规则 -->
+		<div id="game" :class="['cover',{active:visibleGameRule}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.game_rules}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="rule-item">
+						<div class="rule-item-index">1</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_1}}</span>
+							<p class="example">{{translate.guize_1_1}}</p>
+							<p class="example">{{translate.guize_1_2}}</p>
+							<p class="example">{{translate.guize_1_3}}</p>
+							<p class="example">0xb19cde88f77b926d75cff4c7fccd96c18de0f4c800400a56f995aeba33f74850</p>
+							<p class="example">（ {{translate.guize_1_4}}<strong>1988</strong>）</p>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">2</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_2}}</span>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">3</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_3}}</span>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">4</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_4}}</span>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">5</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_5}}</span>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">6</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_6}}</span>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">7</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_7}}</span>
+						</div>
+					</div>
+					<div class="rule-item">
+						<div class="rule-item-index">8</div>
+						<div class="rule-item-text">
+							<span>{{translate.guize_8}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="close-btn" @click="visibleGameRule=false"></div>
+			</div>
+		</div>
+		<!-- 玩法规则 -->
+		<div id="play" :class="['cover',{active:visiblePlayRule}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.put_rule}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="rule-section">
+						<div class="section-text">{{translate.play_role}}</div>
+					</div>
+					<div class="rule-section">
+						<div class="section-title">{{translate.static_money}}</div>
+						<div class="section-text">{{translate.zhineng}}</div>
+					</div>
+					<div class="rule-section">
+						<div class="section-title">{{translate.run_money}}</div>
+						<div class="section-text">{{translate.run_rule}}</div>
+					</div>
+					<div class="rule-section">
+						<div class="section-title">{{translate.out}}</div>
+						<div class="section-text">{{translate.out_rule}}</div>
+					</div>
+				</div>
+				<div class="close-btn" @click="visiblePlayRule=false"></div>
+			</div>
+		</div>
+		<!-- 购买燃料 -->
+		<div id="gas" :class="['cover',{active:visiblePurchase}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.buy_pcc}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="fuel">
+						<div class="label">{{translate.buy_pcc}}</div>
+						<div class="value">1ETH={{proportion}}EWF</div>
+					</div>
+					<div class="fuel-input-wrapper">
+						<input v-model="value" id="eth" type="text" :placeholder="translate.input">
+						<label for="eth">ETH</label>
+					</div>
+					<div class="submit" id="gas-send" @click="purchase">{{translate.send}}ETH</div>
+				</div>
+				<div class="close-btn" @click="visiblePurchase=false;value=''"></div>
+			</div>
+		</div>
+		<!-- 立即参与 -->
+		<div id="join" :class="['cover',{active:visibleJoin}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.into}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="fuel">
+						<div class="label">{{translate.ratio}}</div>
+						<div class="value">1ETH={{proportion}}EWF</div>
+					</div>
+					<div class="fuel-fast">
+						<div class="item" @click="value=1">
+							<span>1</span>
+							<span class="unit">ETH</span>
+						</div>
+						<div class="item" @click="value=11">
+							<span>11</span>
+							<span class="unit">ETH</span>
+						</div>
+						<div class="item" @click="value=31">
+							<span>31</span>
+							<span class="unit">ETH</span>
+						</div>
+						<div class="item" @click="value=61">
+							<span>61</span>
+							<span class="unit">ETH</span>
+						</div>
+					</div>
+					<div class="fuel-input-wrapper">
+						<input v-model="value" id="joineth" value="1" type="text" :placeholder="translate.put_count">
+						<label for="joineth">ETH</label>
+					</div>
+					<div class="submit" id="join-send" @click="check">{{translate.send}}ETH</div>
+				</div>
+				<div class="close-btn" @click="visibleJoin=false;value=''"></div>
+			</div>
+		</div>
+		<!-- 邀请码 -->
+		<div id="code" :class="['cover',{active:visibleInvite}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.code}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="content-wrapper">
+						<img src="img/invite1.png">
+						<div class="text">
+							<span>{{translate.my_child}}：{{invite.parent_address}}</span>
+						</div>
+					</div>
+					<div class="content-wrapper">
+						<img src="img/invite2.png">
+						<div class="text">
+							<span>{{translate.child_count}}：</span>
+							<span>{{invite.child_count}}</span>
+						</div>
+					</div>
+					<div class="content-wrapper">
+						<img src="img/invite3.png">
+						<div class="text">
+							<span>{{translate.link}}：{{invite.link}}</span>
+						</div>
+					</div>
+					<div class="submit" @click="copyLink">{{translate.copy}}</div>
+				</div>
+				<div class="close-btn" @click="visibleInvite=false"></div>
+			</div>
+		</div>
+		<!-- 提现 -->
+		<div :class="['cover',{active:visibleCash}]">
+			<div class="alert">
+				<div class="alert-header">
+					<div class="alert-title">{{translate.withdraw}}</div>
+				</div>
+				<div class="alert-content">
+					<div class="fuel-input-wrapper">
+						<input v-model="cashNumber" type="text" :placeholder="translate.input">
+						<label for="eth">ETH</label>
+					</div>
+					<div class="submit" @click="cash">{{translate.withdraw}}ETH</div>
+				</div>
+				<div class="close-btn" @click="visibleCash=false"></div>
+			</div>
+		</div>
+		<!-- 燃料不足 -->
+		<div id="lake" class="cover">
+			<div class="alert">
+				<div class="alert-content">
+					<img class="lake-img" src="img/lake.png">
+					<div class="alert-message">{{translate.pcc_short}}</div>
+					<div class="submit">{{translate.convert}}</div>
+				</div>
+				<div class="close-btn"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://at.alicdn.com/t/font_1325401_e63ix6o7oyi.js"></script>
+<script type="text/javascript">
+	window.addEventListener('load', async () => {
+		new Vue({
+			el: "#page",
+			data: {
+				activeTabIndex: 0,
+				bigTime: 0,
+				cashNumber: 0,
+				currentTurn: {},
+				currentLottery: {},
+				lang: [{
+					label: '繁体中文',
+					value: 'zh-tw',
+					icon: '#icon-img_zhongg',
+					url: 'lang/zh-tw.json'
+				}, {
+					label: '日本语',
+					value: 'riyu',
+					icon: '#icon-img_rib',
+					url: 'lang/riyu.json'
+				}, {
+					label: '한국어',
+					value: 'hanyu',
+					icon: '#icon-img_hang',
+					url: 'lang/hanyu.json'
+				}, {
+					label: 'English',
+					value: 'en-us',
+					icon: '#icon-img_meig',
+					url: 'lang/en-us.json'
+				}, {
+					label: 'Français',
+					value: 'fayu',
+					icon: '#icon-img_fag',
+					url: 'lang/fayu.json'
+				}, {
+					label: 'русский',
+					value: 'eluosi',
+					icon: '#icon-img_els',
+					url: 'lang/eluosi.json'
+				}],
+				currentLang: {
+					label: '繁体中文',
+					value: 'zh-tw'
+				},
+				invite: {},
+				lottery: {},
+				myProfit: {},
+				myTeam: {},
+				price: {},
+				proportion: 0,
+				smallLottery: null,
+				smallTime: 0,
+				statistic: {},
+				translate: {},
+				user_id: null,
+				value: '',
+				visibleCash: false,
+				visibleGameRule: false,
+				visibleInvite: false,
+				visibleJoin: false,
+				visibleLang: false,
+				visibleLotteryRule: false,
+				visibleMyTeam: false,
+				visiblePlayRule: false,
+				visiblePoint: false,
+				visibleProfit: false,
+				visiblePurchase: false,
+				visibleStatistics: false,
+				vip: {},
+			},
+			computed: {},
+			methods: {
+				async getLang(lang) {
+					let url = this.lang.find((item) => {
+						return item.value == lang
+					}).url
+					let response = await fetch(url)
+					let responseJson = await response.json()
+					this.translate = responseJson
+				},
+				setCurrentLang(item) {
+					this.currentLang.label = item.label
+					this.currentLang.value = item.value
+					window.localStorage.setItem('lang', item.value)
+					this.getLang(item.value)
+					this.initApp()
+				},
+				cutDown(end_time) {
+					var date = new Date();
+					var time = (date.getTime()) / 1000;
+					var lag = end_time - time;
+					if (lag < 0) {
+						return "00:00:00"
+					}
+					var second = Math.floor(lag % 60);
+					var minite = Math.floor((lag / 60) % 60);
+					var hour = Math.floor((lag / 3600) % 24);
+					if (second < 10) {
+						second = '0' + second.toString()
+					}
+					if (minite < 10) {
+						minite = '0' + minite.toString()
+					}
+					if (hour < 10) {
+						hour = '0' + hour.toString()
+					}
+					return hour + ':' + minite + ':' + second
+				},
+				async post(url, param) {
+					param.lang = this.currentLang.value
+					let bodyArry = Object.keys(param).map((element, index) => {
+						return `${element}=${param[element]}`
+					})
+					let body = bodyArry.join("&")
+					let response = await fetch(url, {
+						method: 'POST',
+						headers: {
+							"content-type": "application/x-www-form-urlencoded"
+						},
+						body
+					})
+					let responseJson = await response.json()
+					return responseJson
+				},
+				async getLottery() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/jackpotWin'
+					let param = {}
+					let response = await this.post(url, param)
+					this.lottery = response.data
+					this.timer = setInterval(() => {
+						this.smallTime = this.cutDown(this.lottery.small_time)
+						this.bigTime = this.cutDown(this.lottery.big_time)
+					}, 1000)
+				},
+				async getStatistic() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/prizePool'
+					let param = {}
+					let response = await this.post(url, param)
+					this.statistic = response.data
+				},
+				async getSmallLottery() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/winUser'
+					let param = {}
+					let response = await this.post(url, param)
+					this.smallLottery = response.data
+				},
+				checkLotteryList(type) {
+					window.location.href = 'lottery.html?type=' + type + '&round=' + this.lottery.big_round + '&lang=' + this.currentLang
+						.value
+				},
+				async getVipCount() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/vipCount'
+					let param = {}
+					let response = await this.post(url, param)
+					this.vip = response.data
+				},
+				async getMyTeam() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/myTeam'
+					let param = {
+						user_id: this.user_id
+					}
+					let response = await this.post(url, param)
+					this.myTeam = response.data
+				},
+				async getProfit() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userMoney'
+					let param = {
+						user_id: this.user_id
+					}
+					let response = await this.post(url, param)
+					this.myProfit = response.data
+				},
+				async getCurrentTurn() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/winGuess'
+					let param = {}
+					let response = await this.post(url, param)
+					this.currentTurn = response.data
+				},
+				async getCurrentLottery() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/guessInfo'
+					let param = {}
+					let response = await this.post(url, param)
+					this.currentLottery = response.data
+				},
+				async getPrice() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/guessPrice'
+					let param = {}
+					let response = await this.post(url, param)
+					this.price = response.data
+				},
+				async settlement() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/calculate'
+					let param = {
+						user_id: this.user_id
+					}
+					let response = await this.post(url, param)
+					alert(response.info)
+				},
+				async getProportion() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/getBili'
+					let param = {}
+					let response = await this.post(url, param)
+					this.proportion = response.data
+
+				},
+				async getInvite() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userInfo'
+					let param = {
+						user_id: this.user_id
+					}
+					let response = await this.post(url, param)
+					this.invite = response.data
+				},
+				async cash() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userWithdrawal'
+					let param = {
+						user_id: this.user_id,
+						number: this.cashNumber,
+					}
+					let response = await this.post(url, param)
+					alert(response.info)
+				},
+				copyLink() {
+					imToken.callAPI('native.setClipboard', this.invite.link)
+				},
+				async check() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/checkPcc'
+					let param = {
+						user_id: this.user_id,
+						value: this.value,
+					}
+					let response = await this.post(url, param)
+					if (response.status) {
+						this.join()
+					} else {
+						alert(response.info)
+					}
+				},
+				join() {
+					var params = {
+						to: '0x39F9c3dB6c6Ec1B12Ea96b443c69607B531818C4',
+						from: web3.eth.defaultAccount,
+						value: this.value * '1000000000000000000', //1个币1000000000000000000
+					}
+					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
+						if (err) { } else {
+							let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/buyFuel'
+							let param = {
+								address: web3.eth.defaultAccount,
+								signature,
+								value: this.value,
+							}
+							let response = await this.post(url, param)
+							alert(response.info)
+							if (response.status) {
+								this.buyOrder()
+							}
+						}
+					})
+				},
+				async buyOrder() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/buyOrder'
+					let param = {
+						user_id: this.user_id,
+						value: this.value,
+					}
+					let response = await this.post(url, param)
+					if (response.status) {
+						this.value = ''
+					}
+					alert(response.info)
+				},
+				purchase() {
+					var params = {
+						to: '0x39F9c3dB6c6Ec1B12Ea96b443c69607B531818C4',
+						from: web3.eth.defaultAccount,
+						value: this.value * '1000000000000000000', //1个币1000000000000000000
+					}
+					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
+						if (err) { } else {
+							let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/buyFuel'
+							let param = {
+								address: web3.eth.defaultAccount,
+								signature,
+								value: this.value,
+							}
+							let response = await this.post(url, param)
+							if (response.status) {
+								this.value = ''
+							}
+							alert(response.info)
+						}
+					})
+				},
+				getQuery() {
+					let arr = window.location.search.substring(1).split('&')
+					let obj = {}
+					arr.forEach((item) => {
+						let keyValue = item.split('=')
+						Object.assign(obj, {
+							[keyValue[0]]: decodeURI(keyValue[1])
+						})
+					})
+					return obj
+				},
+				async login() {
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/doLogin'
+					let param = {
+						address: web3.eth.defaultAccount,
+						parent_address: this.getQuery().r
+					}
+					let response = await this.post(url, param)
+					this.user_id = response.data.user_id
+					this.getMyTeam()
+					this.getProfit()
+					this.getInvite()
+				},
+				async initApp() {
+					if (window.ethereum) {
+						window.web3 = new Web3(ethereum);
+						try {
+							await ethereum.enable();
+							web3.eth.defaultAccount = web3.eth.accounts[0]
+							this.login()
+						} catch (error) {
+
+						}
+					} else if (window.web3) {
+
+					}
+					this.getLottery()
+					this.getStatistic()
+					this.getSmallLottery()
+					this.getVipCount()
+					this.getCurrentTurn()
+					this.getCurrentLottery()
+					this.getPrice()
+					this.getProportion()
+				}
+			},
+			created() {
+				let lang = window.localStorage.getItem('lang')
+				if (!lang) {
+					lang = this.getQuery().lang
+				}
+				if (lang) {
+					this.getLang(lang)
+				} else {
+					this.getLang('zh-tw')
+				}
+				this.initApp()
+			}
+		})
+	});
+</script>
+<script type="text/javascript">
+	// DAPP
+	if (!!window.imToken || true) {
+		// 立即参与快速选择
+		var fastItem = $(".fuel-fast .item")
+		fastItem.click(function () {
+			fastItem.removeClass("active")
+			$(this).addClass("active")
+		})
+	} else {
+		alert('请在imToken中打开网页')
+	}
+</script>
+
+</html>

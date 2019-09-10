@@ -1,0 +1,145 @@
+.hash-value {
+	height: 40px;
+	padding: 0 20px;
+	margin-top: 20px;
+	text-align: center;
+	font-size: 12px;
+	line-height: 40px;
+	color: #333;
+	background: linear-gradient(269deg, rgba(20, 32, 70, 0) 0%, rgba(193, 194, 199, 0.19) 49%, rgba(4, 6, 14, 0) 100%);
+}
+
+.hash-value strong {
+	color: #E2C36E;
+}
+
+.board {
+	padding: 0 15px;
+}
+
+.enter-number {
+	margin: 20px 0;
+	display: flex;
+}
+
+.enter-number .item {
+	position: relative;
+	flex: 1;
+	padding-top: 20.29%;
+	margin-right: 10px;
+	border-radius: 3px;
+	border: 1px solid #EEEEEE;
+	background: #F9F9F9;
+}
+
+.enter-number .item span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	font-size: 30px;
+	color: #1DABBB;
+}
+
+.enter-number .button {
+	margin-right: 0;
+	border: none;
+	background: url(../img/confirm.png)center / 100% 100% no-repeat;
+}
+
+.enter-number button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	word-break: break-all;
+	font-size: 17px;
+	color: #FFFFFF;
+	border-radius: 3px;
+	border: 1px solid #EEEEEE;
+}
+
+.board-number {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.board-number .item,
+.board-number .back {
+	position: relative;
+	width: 30%;
+	padding-top: 20.29%;
+	margin-bottom: 15px;
+	border-radius: 3px;
+	border: 1px solid #EEEEEE;
+	background: #F9F9F9;
+}
+
+.board-number .item span,
+.board-number .back span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	font-size: 30px;
+	color: #333;
+	border-radius: 3px;
+	border: 1px solid #EEEEEE;
+	background: #F9F9F9;
+}
+
+.board-number .zero {
+	position: relative;
+	width: 65%;
+	padding-top: 20.29%;
+	margin-bottom: 15px;
+	border-radius: 3px;
+	border: 1px solid #EEEEEE;
+	background: #F9F9F9;
+}
+
+
+.board-number .zero span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	font-size: 30px;
+	color: #333;
+}
+
+
+.submit {
+	width: 100%;
+	height: 45px;
+	text-align: center;
+	font-size: 17px;
+	line-height: 45px;
+	color: #FFFFFF;
+	border-radius: 5px;
+	background: url(../img/button.png)center / 100% 100% no-repeat;
+}
+
+
+.selected {
+	padding: 25px 0;
+	font-size: 14px;
+	color: #1DABBB;
+}

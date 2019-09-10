@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- <meta http-equiv="Pragma" content="no-cache" /> -->
+	<meta charset="UTF-8" />
+	<meta name="Keywords" content="" />
+	<meta name="Description" content="" />
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>ETH Winner</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+	<link rel="stylesheet" href="css/betting.css">
+</head>
+<style type="text/css">
+	.hash-value {
+		height: 60px;
+		word-wrap: break-word;
+		line-height: 20px;
+	}
+</style>
+
+<body>
+	<div id="page">
+		<header>
+			<a href="index.html"><img src="img/logo.png" class="logo"></a>
+			<button class="switch" @click="visibleLang=true">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-switch-black"></use>
+				</svg>
+				<span id="lang">{{currentLang.label}}</span>
+			</button>
+			<div class="locale-wrapper" v-show="visibleLang" @click="visibleLang=false">
+				<div class="locale">
+					<div class="locale-item" v-for="item in lang" @click="getLang(item.value)">
+						<svg class="icon" aria-hidden="true">
+							<use :xlink:href="item.icon"></use>
+						</svg>
+						<span>{{item.label}}</span>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="title">
+			<img src="img/title.png">
+			<span>{{translate.select_code}}</span>
+			<img src="img/title_c.png">
+		</div>
+		<div class="hash-value">
+			<svg class="icon" aria-hidden="true">
+				<use xlink:href="#icon-icon_"></use>
+			</svg>
+			<span>{{translate.di}}<strong>{{data.round}}</strong>{{translate.round}}，{{data.c_time}}，{{data.block_str}}
+			</span>
+			<p>Hex:{{data.hash}}</p>
+		</div>
+		<div class="board">
+			<div class="enter-number">
+				<div class="item" v-for="n in 4">
+					<span>{{number[n-1]}}</span>
+				</div>
+				<div class="item button" @click="submit">
+					<button>{{translate.confirm}}</button>
+				</div>
+			</div>
+			<div class="board-number">
+				<div v-for="n in 9" class="item" @click="appendNumber(n)">
+					<span>{{n}}</span>
+				</div>
+				<div data-value="0" class="item zero" @click="appendNumber(0)">
+					<span>0</span>
+				</div>
+				<div class="back" @click="back">
+					<span>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-xuanzhm_icon_shanc"></use>
+						</svg>
+					</span>
+				</div>
+			</div>
+			<div class="submit" @click="submit">{{translate.confirm_put}}</div>
+			<div class="selected">{{translate.selected_number}}：{{data.number}}</div>
+		</div>
+	</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://at.alicdn.com/t/font_1325401_e63ix6o7oyi.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '#page',
+		data: {
+			currentLang: {
+				label: '繁体中文',
+				value: 'zh-tw'
+			},
+			data: {},
+			isLogin: false,
+			lang: [{
+				label: '繁体中文',
+				value: 'zh-tw',
+				icon: '#icon-img_zhongg',
+				url: 'lang/zh-tw.json'
+			}, {
+				label: '日本语',
+				value: 'riyu',
+				icon: '#icon-img_rib',
+				url: 'lang/riyu.json'
+			}, {
+				label: '한국어',
+				value: 'hanyu',
+				icon: '#icon-img_hang',
+				url: 'lang/hanyu.json'
+			}, {
+				label: 'English',
+				value: 'en-us',
+				icon: '#icon-img_meig',
+				url: 'lang/en-us.json'
+			}, {
+				label: 'Français',
+				value: 'fayu',
+				icon: '#icon-img_fag',
+				url: 'lang/fayu.json'
+			}, {
+				label: 'русский',
+				value: 'eluosi',
+				icon: '#icon-img_els',
+				url: 'lang/eluosi.json'
+			}],
+			number: '',
+			translate: {},
+			user_id: null,
+			visibleLang: false,
+		},
+		methods: {
+			async getLang(lang) {
+				window.localStorage.setItem('lang', lang)
+				let item = this.lang.find((item) => {
+					return item.value == lang
+				})
+				this.currentLang.label = item.label
+				this.currentLang.value = item.value
+				let response = await fetch(item.url)
+				let responseJson = await response.json()
+				this.translate = responseJson
+				this.initApp()
+			},
+			async post(url, param) {
+				param.lang = this.currentLang.value
+				let bodyArry = Object.keys(param).map((element, index) => {
+					return `${element}=${param[element]}`
+				})
+				let body = bodyArry.join("&")
+				let response = await fetch(url, {
+					method: 'POST',
+					headers: {
+						"content-type": "application/x-www-form-urlencoded"
+					},
+					body
+				})
+				let responseJson = await response.json()
+				return responseJson
+			},
+			getQuery() {
+				let arr = window.location.search.substring(1).split('&')
+				let obj = {}
+				arr.forEach((item) => {
+					let keyValue = item.split('=')
+					Object.assign(obj, {
+						[keyValue[0]]: decodeURI(keyValue[1])
+					})
+				})
+				return obj
+			},
+			async login() {
+				let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/doLogin'
+				let param = {
+					address: web3.eth.defaultAccount,
+					parent_address: this.getQuery().r
+				}
+				let response = await this.post(url, param)
+				this.user_id = response.data.user_id
+				this.getData()
+			},
+			async getData() {
+				let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userGuessInfo'
+				let param = {
+					user_id: this.user_id
+				}
+				let response = await this.post(url, param)
+				this.data = response.data
+			},
+			async submit() {
+				let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/doGuess'
+				let param = {
+					user_id: this.user_id,
+					item_number: this.number
+				}
+				let response = await this.post(url, param)
+				if (response.status) {
+					this.getData()
+				}
+				alert(response.info)
+			},
+			appendNumber(n) {
+				if (this.number.length < 4) {
+					this.number += n.toString()
+				}
+			},
+			back() {
+				this.number = this.number.slice(0, this.number.length - 1)
+			},
+			async initApp() {
+				if (window.ethereum) {
+					window.web3 = new Web3(ethereum);
+					try {
+						await ethereum.enable();
+						web3.eth.defaultAccount = web3.eth.accounts[0]
+						this.login()
+					} catch (error) {
+
+					}
+				} else if (window.web3) {
+
+				}
+			}
+		},
+		created() {
+			let lang = window.localStorage.getItem('lang')
+			if (!lang) {
+				lang = this.getQuery().lang
+			}
+			if (lang) {
+				this.getLang(lang)
+			} else {
+				this.getLang('zh-tw')
+			}
+		}
+	})
+</script>
+
+</html>
