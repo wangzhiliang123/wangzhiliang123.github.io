@@ -11,6 +11,7 @@
 	<title>ETH Winner</title>
 	<link rel="stylesheet" type="text/css" href="css/base.css" />
 	<link rel="stylesheet" href="css/betting.css">
+	<link rel="stylesheet" type="text/css" href="css/layer.css" />
 </head>
 <style type="text/css">
 	.hash-value {
@@ -38,6 +39,14 @@
 						</svg>
 						<span>{{item.label}}</span>
 					</div>
+				</div>
+			</div>
+			<div class="language other">
+				<div class="language-item" v-for="item in lang" @click="getLang(item.value)">
+					<svg class="icon" aria-hidden="true">
+						<use :xlink:href="item.icon"></use>
+					</svg>
+					<span>{{item.label}}</span>
 				</div>
 			</div>
 		</header>
@@ -86,6 +95,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://at.alicdn.com/t/font_1325401_e63ix6o7oyi.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/layer.js"></script>
 <script type="text/javascript">
 	new Vue({
 		el: '#page',
@@ -95,6 +105,7 @@
 				value: 'zh-tw'
 			},
 			data: {},
+			isBusy: false,
 			isLogin: false,
 			lang: [{
 				label: '繁体中文',
@@ -191,16 +202,21 @@
 				this.data = response.data
 			},
 			async submit() {
+				if (this.isBusy) {
+					return
+				}
 				let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/doGuess'
 				let param = {
 					user_id: this.user_id,
 					item_number: this.number
 				}
+				this.isBusy = true
 				let response = await this.post(url, param)
 				if (response.status) {
 					this.getData()
-				}
-				alert(response.info)
+				} 
+				layer.msg(response.info)
+				this.isBusy = false
 			},
 			appendNumber(n) {
 				if (this.number.length < 4) {

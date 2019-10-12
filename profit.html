@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<!-- <meta http-equiv="Pragma" content="no-cache" /> -->
 	<meta charset="UTF-8" />
@@ -31,6 +30,14 @@
 						</svg>
 						<span>{{item.label}}</span>
 					</div>
+				</div>
+			</div>
+			<div class="language other">
+				<div class="language-item" v-for="item in lang" @click="getLang(item.value)">
+					<svg class="icon" aria-hidden="true">
+						<use :xlink:href="item.icon"></use>
+					</svg>
+					<span>{{item.label}}</span>
 				</div>
 			</div>
 		</header>
@@ -140,7 +147,9 @@
 				},
 				async getProfit() {
 					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userDayWin'
-					let param = {}
+					let param = {
+						user_id: this.user_id,
+					}
 					let response = await this.post(url, param)
 					this.profit = response.data
 				},

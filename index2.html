@@ -11,7 +11,6 @@
 	<title>ETH Winner</title>
 	<link rel="stylesheet" type="text/css" href="css/base.css" />
 	<link rel="stylesheet" type="text/css" href="css/index.css" />
-	<link rel="stylesheet" type="text/css" href="css/layer.css" />
 </head>
 
 <body>
@@ -69,7 +68,7 @@
 				<span>{{translate.buy}}</span>
 			</button>
 		</div>
-
+		<!-- 第n轮信息 -->
 		<div class="lottery">
 			<div class="section">
 				<div class="section-header">
@@ -187,6 +186,7 @@
 		</div>
 		<br /><br />
 		<br /><br />
+		<!-- hash竞猜 -->
 		<div class="hash board">
 			<div class="hash-header">
 				<button class="rules game" @click="visibleGameRule=true">
@@ -197,10 +197,21 @@
 				</button>
 			</div>
 			<div class="hash-title">Hash{{translate.upon}}</div>
+			<!-- <div class="hash-value board-value">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-icon_"></use>
+				</svg>
+				<span>{{translate.di}}<strong>{{currentTurn.round}}</strong>{{translate.round}}，{{currentTurn.c_time}}，{{currentTurn.block_str}}
+				</span>
+				<p>Hex:{{currentTurn.hash}}</p>
+			</div> -->
 			<a :href="`history.html?lang=${currentLang.value}`">
 				<div class="hash-history">{{translate.history}}</div>
 			</a>
 			<div class="turn">（{{translate.di}}{{currentTurn.round}}{{translate.round}}）</div>
+			<!-- </div> -->
+			<!-- 第n轮开奖 -->
+			<!-- <div class="board"> -->
 			<div class="board-title">
 				<img src="img/title.png">
 				<span>{{translate.di}}{{currentTurn.round}}{{translate.round}}{{translate.open_win}}</span>
@@ -247,7 +258,7 @@
 			<div class="joined">
 				<span>{{translate.has_been}}：</span>
 				<span class="number">{{price.puteht}}</span>
-				<span>EWT</span>
+				<span>EWF</span>
 			</div>
 			<a :href="`betting.html?lang=${currentLang.value}`">
 				<div class="betting">
@@ -308,6 +319,7 @@
 					{{translate.jiedian}}</div>
 			</div>
 		</div>
+		<!-- 我的收益 -->
 		<div :class="['cover',{active:visibleProfit}]">
 			<div class="alert" style="background:#233163">
 				<div class="alert-header">
@@ -322,17 +334,6 @@
 							</div>
 							<div class="value">
 								<span>{{statictime}}</span>
-							</div>
-						</div>
-						<div class="item">
-							<div class="label">
-								<i></i>
-								<span>{{translate.yuqi}}</span>
-							</div>
-							<div class="value">
-								<button @click="settlement">{{translate.settlement}}</button>
-								<span class="number">{{myProfit.expect_profit}}</span>
-								<span>ETH</span>
 							</div>
 						</div>
 						<div class="item">
@@ -402,6 +403,7 @@
 							</div>
 							<div class="value">
 								<span class="number">{{myProfit.multiple}}</span>
+								<!-- <span>倍</span> -->
 							</div>
 						</div>
 						<div class="item">
@@ -460,6 +462,7 @@
 				<div class="close-btn" @click="visibleProfit=false"></div>
 			</div>
 		</div>
+		<!-- 统计 -->
 		<div :class="['cover',{active:visibleStatistics}]">
 			<div class="alert" style="background:#233163">
 				<div class="alert-header">
@@ -494,7 +497,7 @@
 							</div>
 							<div class="value">
 								<span class="number">1ETH:{{statistic.proportion}}</span>
-								<span>EWT</span>
+								<span>EWF</span>
 							</div>
 						</div>
 						<div class="item">
@@ -504,7 +507,7 @@
 							</div>
 							<div class="value">
 								<span class="number">{{statistic.pccnum}}</span>
-								<span>EWT</span>
+								<span>EWF</span>
 							</div>
 						</div>
 					</div>
@@ -512,6 +515,7 @@
 				<div class="close-btn" @click="visibleStatistics=false"></div>
 			</div>
 		</div>
+		<!-- 我的团队 -->
 		<div :class="['cover',{active:visibleMyTeam}]">
 			<div class="alert" style="background:#233163">
 				<div class="alert-header">
@@ -583,6 +587,7 @@
 				<div class="close-btn" @click="visibleMyTeam=false"></div>
 			</div>
 		</div>
+		<!-- 节点统计 -->
 		<div :class="['cover',{active:visiblePoint}]">
 			<div class="alert" style="background:#233163">
 				<div class="alert-header">
@@ -627,6 +632,7 @@
 				<div class="close-btn" @click="visiblePoint=false"></div>
 			</div>
 		</div>
+		<!-- 开奖规则 -->
 		<div id="lottery" :class="['cover',{active:visibleLotteryRule}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -649,6 +655,7 @@
 				<div class="close-btn" @click="visibleLotteryRule=false"></div>
 			</div>
 		</div>
+		<!-- 游戏规则 -->
 		<div id="game" :class="['cover',{active:visibleGameRule}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -712,6 +719,7 @@
 				<div class="close-btn" @click="visibleGameRule=false"></div>
 			</div>
 		</div>
+		<!-- 玩法规则 -->
 		<div id="play" :class="['cover',{active:visiblePlayRule}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -737,6 +745,7 @@
 				<div class="close-btn" @click="visiblePlayRule=false"></div>
 			</div>
 		</div>
+		<!-- 购买燃料 -->
 		<div id="gas" :class="['cover',{active:visiblePurchase}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -745,12 +754,10 @@
 				<div class="alert-content">
 					<div class="fuel">
 						<div class="label">{{translate.buy_pcc}}</div>
-						<div class="value">1ETH={{proportion}}EWT</div>
+						<div class="value">1ETH={{proportion}}EWF</div>
 					</div>
 					<div class="fuel-input-wrapper">
-						<div class="fuel-input-inner">
-							<input v-model="value" id="eth" type="text" :placeholder="translate.input">
-						</div>
+						<input v-model="value" id="eth" type="text" :placeholder="translate.input">
 						<label for="eth">ETH</label>
 					</div>
 					<div class="submit" id="gas-send" @click="purchase">{{translate.send}}ETH</div>
@@ -758,6 +765,7 @@
 				<div class="close-btn" @click="visiblePurchase=false;value=''"></div>
 			</div>
 		</div>
+		<!-- 立即参与 -->
 		<div id="join" :class="['cover',{active:visibleJoin}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -766,7 +774,7 @@
 				<div class="alert-content">
 					<div class="fuel">
 						<div class="label">{{translate.ratio}}</div>
-						<div class="value">1ETH={{proportion}}EWT</div>
+						<div class="value">1ETH={{proportion}}EWF</div>
 					</div>
 					<div class="fuel-fast">
 						<div class="item" @click="value=1">
@@ -787,10 +795,7 @@
 						</div>
 					</div>
 					<div class="fuel-input-wrapper">
-						<div class="fuel-input-inner">
-							<input v-model="value" id="joineth" value="1" type="text"
-								:placeholder="translate.put_count">
-						</div>
+						<input v-model="value" id="joineth" value="1" type="text" :placeholder="translate.put_count">
 						<label for="joineth">ETH</label>
 					</div>
 					<div class="submit" id="join-send" @click="check">{{translate.send}}ETH</div>
@@ -798,6 +803,7 @@
 				<div class="close-btn" @click="visibleJoin=false;value=''"></div>
 			</div>
 		</div>
+		<!-- 邀请码 -->
 		<div id="code" :class="['cover',{active:visibleInvite}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -828,6 +834,7 @@
 				<div class="close-btn" @click="visibleInvite=false"></div>
 			</div>
 		</div>
+		<!-- 提现 -->
 		<div :class="['cover',{active:visibleCash}]">
 			<div class="alert">
 				<div class="alert-header">
@@ -835,9 +842,7 @@
 				</div>
 				<div class="alert-content">
 					<div class="fuel-input-wrapper">
-						<div class="fuel-input-inner">
-							<input v-model="cashNumber" type="text" :placeholder="translate.input">
-						</div>
+						<input v-model="cashNumber" type="text" :placeholder="translate.input">
 						<label for="eth">ETH</label>
 					</div>
 					<div class="submit" @click="cash">{{translate.withdraw}}ETH</div>
@@ -845,6 +850,7 @@
 				<div class="close-btn" @click="visibleCash=false"></div>
 			</div>
 		</div>
+		<!-- 燃料不足 -->
 		<div id="lake" class="cover">
 			<div class="alert">
 				<div class="alert-content">
@@ -860,7 +866,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://at.alicdn.com/t/font_1325401_e63ix6o7oyi.js"></script>
-<script src="js/layer.js"></script>
 <script type="text/javascript">
 	window.addEventListener('load', async () => {
 		new Vue({
@@ -907,7 +912,6 @@
 					value: 'zh-tw'
 				},
 				invite: {},
-				isBusy: false,
 				lottery: {},
 				myProfit: {},
 				myTeam: {},
@@ -933,17 +937,14 @@
 				visiblePurchase: false,
 				visibleStatistics: false,
 				vip: {},
-				inviteCode: `${window.location.origin}${window.location.pathname}`
+				inviteCode:`${window.location.origin}${window.location.pathname}`
 			},
 			computed: {},
 			methods: {
 				async getLang(lang) {
-					let item =  this.lang.find((item) => {
+					let url = this.lang.find((item) => {
 						return item.value == lang
-					})
-					let url = item.url
-					this.currentLang.label = item.label
-					this.currentLang.value = item.value
+					}).url
 					let response = await fetch(url)
 					let responseJson = await response.json()
 					this.translate = responseJson
@@ -993,7 +994,7 @@
 					return responseJson
 				},
 				async getLottery() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/jackpotWin'
+					let url = 'https://http://154.222.138.182/Api/Index/jackpotWin'
 					let param = {}
 					let response = await this.post(url, param)
 					this.lottery = response.data
@@ -1003,13 +1004,13 @@
 					}, 1000)
 				},
 				async getStatistic() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/prizePool'
+					let url = 'https://http://154.222.138.182/Api/Index/prizePool'
 					let param = {}
 					let response = await this.post(url, param)
 					this.statistic = response.data
 				},
 				async getSmallLottery() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/winUser'
+					let url = 'https://http://154.222.138.182/Api/Index/winUser'
 					let param = {}
 					let response = await this.post(url, param)
 					this.smallLottery = response.data
@@ -1019,13 +1020,13 @@
 						.value
 				},
 				async getVipCount() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/vipCount'
+					let url = 'https://http://154.222.138.182/Api/Index/vipCount'
 					let param = {}
 					let response = await this.post(url, param)
 					this.vip = response.data
 				},
 				async getMyTeam() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/myTeam'
+					let url = 'https://http://154.222.138.182/Api/Index/myTeam'
 					let param = {
 						user_id: this.user_id
 					}
@@ -1033,15 +1034,13 @@
 					this.myTeam = response.data
 				},
 				async getProfit() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userMoney'
+					let url = 'https://http://154.222.138.182/Api/Index/userMoney'
 					let param = {
 						user_id: this.user_id
 					}
 					let response = await this.post(url, param)
 					this.myProfit = response.data
-					if(response.data.is_out==1){
-						this.statictime = response.data.hour
-					}else if (this.myProfit.hour == '0h' || !this.myProfit.hour) {
+					if (this.myProfit.hour == '0h' || !this.myProfit.hour) {
 						this.statictime = ''
 					} else {
 						this.timer = setInterval(() => {
@@ -1050,32 +1049,40 @@
 					}
 				},
 				async getCurrentTurn() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/winGuess'
+					let url = 'https://http://154.222.138.182/Api/Index/winGuess'
 					let param = {}
 					let response = await this.post(url, param)
 					this.currentTurn = response.data
 				},
 				async getCurrentLottery() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/guessInfo'
+					let url = 'https://http://154.222.138.182/Api/Index/guessInfo'
 					let param = {}
 					let response = await this.post(url, param)
 					this.currentLottery = response.data
 				},
 				async getPrice() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/guessPrice'
+					let url = 'https://http://154.222.138.182/Api/Index/guessPrice'
 					let param = {}
 					let response = await this.post(url, param)
 					this.price = response.data
 				},
+				// async settlement() {
+				// 	let url = 'https://http://154.222.138.182/Api/Index/calculate'
+				// 	let param = {
+				// 		user_id: this.user_id
+				// 	}
+				// 	let response = await this.post(url, param)
+				// 	alert(response.info)
+				// },
 				async getProportion() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/getBili'
+					let url = 'https://http://154.222.138.182/Api/Index/getBili'
 					let param = {}
 					let response = await this.post(url, param)
 					this.proportion = response.data
 
 				},
 				async getInvite() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userInfo'
+					let url = 'https://http://154.222.138.182/Api/Index/userInfo'
 					let param = {
 						user_id: this.user_id
 					}
@@ -1083,7 +1090,7 @@
 					this.invite = response.data
 				},
 				async cash() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/userWithdrawal'
+					let url = 'https://http://154.222.138.182/Api/Index/userWithdrawal'
 					let param = {
 						user_id: this.user_id,
 						number: this.cashNumber,
@@ -1092,143 +1099,116 @@
 					alert(response.info)
 				},
 				copyLink() {
-					let baseurl = window.location.origin
-					imToken.callAPI('native.setClipboard', baseurl + this.invite.link)
+					imToken.callAPI('native.setClipboard', this.invite.link)
 				},
 				async check() {
-					if (this.isBusy) {
-						return
-					}
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/checkPcc'
+					
+					let url = 'https://http://154.222.138.182/Api/Index/checkPcc'
 					let param = {
 						user_id: this.user_id,
 						value: this.value,
 					}
-					this.isBusy = true
 					let response = await this.post(url, param)
 					if (response.status) {
 						this.isoutm()
 						// this.join()
 					} else {
-						this.isBusy = false
-						layer.msg(response.info);
+						alert(response.info)
 					}
 				},
 				// 入金
-				join() {
-					let parentaddress = this.getQuery().r
-// 					alert(parentaddress)
-					if(parentaddress){
-						let data = '0x957b79b7000000000000000000000000'+parentaddress.substring(2)
-// 						alert(data)
-						var params = {
-							to: '0x3274Ef6BD3613aA8D6e49dEfEBF956658a08E048',
-							from: web3.eth.defaultAccount,
-							value: this.value * '1000000000000000000', //1个币1000000000000000000
-							gas: 200000,
-							data: data,
-						}
-					} else{
-						let data = '0x957b79b7000000000000000000000000'
-						var params = {
-							to: '0x3274Ef6BD3613aA8D6e49dEfEBF956658a08E048',
-							from: web3.eth.defaultAccount,
-							value: this.value * '1000000000000000000', //1个币1000000000000000000
-							gas: 200000,
-							data: data,
-						}
+			    join() {
+					var params = {
+						to: '0x5db2c2553A437e296315c9277092f1446bDb9E80',
+						from: web3.eth.defaultAccount,
+						value: this.value * '1000000000000000000', //1个币1000000000000000000
+						gas: 200000,
 					}
+					
 					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
-// 						alert(err)
-// 						alert(signature)
-						if (err) {
-							this.isBusy = false
-						} else {
-							this.buyOrder(signature)
+						if (err) { } else {
+							// let url = 'https://http://154.222.138.182/Api/Index/isoutm'
+							// let param = {
+							// 	address: web3.eth.defaultAccount,
+							// }
+							// let response = await this.post(url, param)
+							// // alert(response.info)
+							// if (response.status) {
+								this.buyOrder()
+							// }
 						}
 					})
 				},
-				async buyOrder(signature) {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/buyOrder'
+				async buyOrder() {
+					let url = 'https://http://154.222.138.182/Api/Index/buyOrder'
 					let param = {
 						user_id: this.user_id,
 						value: this.value,
-						hash: signature,
 					}
 					let response = await this.post(url, param)
-					this.isBusy = false
 					if (response.status == 1) {
-						layer.msg(response.info);
+						alert(response.info)
 					}
 				},
 				async isoutm() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/isoutm'
+					let url = 'https://http://154.222.138.182/Api/Index/isoutm'
 					let param = {
 						user_id: this.user_id,
 					}
 					let response = await this.post(url, param)
 					if (response.status == 0) {
-						this.isBusy = false
-						layer.msg(response.info)
-					} else {
+						alert(response.info)
+					} else{
 						this.join()
 					}
-
+					
 				},
 				// 购买燃料
 				purchase() {
 					// if (this.value == '' || this.value == null) {
 					// 	alert(translate.shurushuliang)
 					// }
-					if (this.isBusy) {
-						return
-					}
 					var params = {
-						to: '0x2F46D5B2BD5a5E867655A5300f6165071e8da0e8',
+						to: '0xC2b6C8Eaa5D001234585AAAb713aEd3B33a556ec',
 						from: web3.eth.defaultAccount,
 						value: this.value * '1000000000000000000', //1个币1000000000000000000
 						gas: 200000,
 					}
 					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
 						if (err) { } else {
-							let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/buyFuel'
+							let url = 'https://http://154.222.138.182/Api/Index/buyFuel'
 							let param = {
 								address: web3.eth.defaultAccount,
 								signature,
 								value: this.value,
 							}
-							this.isBusy = true
 							let response = await this.post(url, param)
-							this.isBusy = false
 							if (response.status) {
 								this.value = ''
 							}
-							layer.msg(response.info)
+							alert(response.info)
 						}
 					})
 				},
+
 				// 结算
 				settlement() {
 					var params = {
-						to: '0x3274Ef6BD3613aA8D6e49dEfEBF956658a08E048',
+						to: '0x5db2c2553A437e296315c9277092f1446bDb9E80',
 						from: web3.eth.defaultAccount,
 						value: this.value * '0000000000000000000', //1个币1000000000000000000
 						gas: 200000,
 					}
 					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
 						if (err) { } else {
-							let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/settlement'
-							let param = {
-								user_id: this.user_id,
-							}
-							let response = await this.post(url, param)
 						}
 					})
 				},
+
 				// 提现
 				cashwithdrawal() {
 					var params = {
-						to: '0x3274Ef6BD3613aA8D6e49dEfEBF956658a08E048',
+						to: '0x5db2c2553A437e296315c9277092f1446bDb9E80',
 						from: web3.eth.defaultAccount,
 						value: this.value * '0000000000000000000', //1个币1000000000000000000
 						gas: 200000,
@@ -1250,7 +1230,7 @@
 					return obj
 				},
 				async login() {
-					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/doLogin'
+					let url = 'https://http://154.222.138.182/Api/Index/doLogin'
 					let param = {
 						address: web3.eth.defaultAccount,
 						parent_address: this.getQuery().r
@@ -1262,21 +1242,18 @@
 					this.getInvite()
 				},
 				async initApp() {
-					if (window.imToken) {
-            					try {
-              						await ethereum.enable();
-              						imToken.callAPI('user.getCurrentAccount', (err, address) => {
-                						if (err) {
-                  							imToken.callAPI('navigator.closeDapp')
-                						} else {
-                  							web3.eth.defaultAccount = address;
-                  							this.login();
-                						}
-              						});
-            					} catch (error) {
-              						imToken.callAPI('navigator.closeDapp')
-            					}
-         				}
+					if (window.ethereum) {
+						window.web3 = new Web3(ethereum);
+						try {
+							await ethereum.enable();
+							web3.eth.defaultAccount = web3.eth.accounts[0]
+							this.login()
+						} catch (error) {
+
+						}
+					} else if (window.web3) {
+
+					}
 					this.getLottery()
 					this.getStatistic()
 					this.getSmallLottery()
@@ -1304,14 +1281,16 @@
 	});
 </script>
 <script type="text/javascript">
+	// DAPP
 	if (!!window.imToken || true) {
+		// 立即参与快速选择
 		var fastItem = $(".fuel-fast .item")
 		fastItem.click(function () {
 			fastItem.removeClass("active")
 			$(this).addClass("active")
 		})
 	} else {
-		layer.msg('请在imToken中打开网页')
+		alert('请在imToken中打开网页')
 	}
 </script>
 

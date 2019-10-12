@@ -140,6 +140,7 @@
 
 .selected {
 	padding: 25px 0;
+	word-break: break-all;
 	font-size: 14px;
 	color: #1DABBB;
 }
