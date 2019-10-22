@@ -1116,8 +1116,14 @@
 				},
 				// 入金
 				join() {
-					let parentaddress = this.getQuery().r
-// 					alert(parentaddress)
+// 					let parentaddress = this.getQuery().r
+					let url = 'https://ethwinner.pro1.lnkj1.com/Api/Index/getParentAddress'
+					let param = {
+						user_id: this.user_id,
+					}
+					let response = await this.post(url, param)
+					let parentaddress =response.status?response.data:""
+					alert(parentaddress)
 					if(parentaddress){
 						let data = '0x957b79b7000000000000000000000000'+parentaddress.substring(2)
 // 						alert(data)
