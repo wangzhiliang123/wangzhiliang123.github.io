@@ -993,7 +993,7 @@
 					return responseJson
 				},
 				async getLottery() {
-					let url = 'https://154.222.138.182/Api/Index/jackpotWin'
+					let url = 'https://154.222.138.113/jackpotWin'
 					let param = {}
 					let response = await this.post(url, param)
 					this.lottery = response.data
@@ -1003,13 +1003,13 @@
 					}, 1000)
 				},
 				async getStatistic() {
-					let url = 'https://154.222.138.182/Api/Index/prizePool'
+					let url = 'https://154.222.138.113/prizePool'
 					let param = {}
 					let response = await this.post(url, param)
 					this.statistic = response.data
 				},
 				async getSmallLottery() {
-					let url = 'https://154.222.138.182/Api/Index/winUser'
+					let url = 'https://154.222.138.113/winUser'
 					let param = {}
 					let response = await this.post(url, param)
 					this.smallLottery = response.data
@@ -1019,13 +1019,13 @@
 						.value
 				},
 				async getVipCount() {
-					let url = 'https://154.222.138.182/Api/Index/vipCount'
+					let url = 'https://154.222.138.113/vipCount'
 					let param = {}
 					let response = await this.post(url, param)
 					this.vip = response.data
 				},
 				async getMyTeam() {
-					let url = 'https://154.222.138.182/Api/Index/myTeam'
+					let url = 'https://154.222.138.113/myTeam'
 					let param = {
 						user_id: this.user_id
 					}
@@ -1033,7 +1033,7 @@
 					this.myTeam = response.data
 				},
 				async getProfit() {
-					let url = 'https://154.222.138.182/Api/Index/userMoney'
+					let url = 'https://154.222.138.113/userMoney'
 					let param = {
 						user_id: this.user_id
 					}
@@ -1050,32 +1050,32 @@
 					}
 				},
 				async getCurrentTurn() {
-					let url = 'https://154.222.138.182/Api/Index/winGuess'
+					let url = 'https://154.222.138.113/winGuess'
 					let param = {}
 					let response = await this.post(url, param)
 					this.currentTurn = response.data
 				},
 				async getCurrentLottery() {
-					let url = 'https://154.222.138.182/Api/Index/guessInfo'
+					let url = 'https://154.222.138.113/guessInfo'
 					let param = {}
 					let response = await this.post(url, param)
 					this.currentLottery = response.data
 				},
 				async getPrice() {
-					let url = 'https://154.222.138.182/Api/Index/guessPrice'
+					let url = 'https://154.222.138.113/guessPrice'
 					let param = {}
 					let response = await this.post(url, param)
 					this.price = response.data
 				},
 				async getProportion() {
-					let url = 'https://154.222.138.182/Api/Index/getBili'
+					let url = 'https://154.222.138.113/getBili'
 					let param = {}
 					let response = await this.post(url, param)
 					this.proportion = response.data
 
 				},
 				async getInvite() {
-					let url = 'https://154.222.138.182/Api/Index/userInfo'
+					let url = 'https://154.222.138.113/userInfo'
 					let param = {
 						user_id: this.user_id
 					}
@@ -1083,7 +1083,7 @@
 					this.invite = response.data
 				},
 				async cash() {
-					let url = 'https://154.222.138.182/Api/Index/userWithdrawal'
+					let url = 'https://154.222.138.113/userWithdrawal'
 					let param = {
 						user_id: this.user_id,
 						number: this.cashNumber,
@@ -1099,7 +1099,7 @@
 					if (this.isBusy) {
 						return
 					}
-					let url = 'https://154.222.138.182/Api/Index/checkPcc'
+					let url = 'https://154.222.138.113/checkPcc'
 					let param = {
 						user_id: this.user_id,
 						value: this.value,
@@ -1117,7 +1117,7 @@
 				// 入金
 				async join() {
 // 					let parentaddress = this.getQuery().r
-					let url = 'https://154.222.138.182/Api/Index/getParentAddress'
+					let url = 'https://154.222.138.113/getParentAddress'
 					let param = {
 						user_id: this.user_id,
 					}
@@ -1155,7 +1155,7 @@
 					})
 				},
 				async buyOrder(signature) {
-					let url = 'https://154.222.138.182/Api/Index/buyOrder'
+					let url = 'https://154.222.138.113/buyOrder'
 					let param = {
 						user_id: this.user_id,
 						value: this.value,
@@ -1168,7 +1168,7 @@
 					}
 				},
 				async isoutm() {
-					let url = 'https://154.222.138.182/Api/Index/isoutm'
+					let url = 'https://154.222.138.113/isoutm'
 					let param = {
 						user_id: this.user_id,
 					}
@@ -1197,7 +1197,7 @@
 					}
 					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
 						if (err) { } else {
-							let url = 'https://154.222.138.182/Api/Index/buyFuel'
+							let url = 'https://154.222.138.113/buyFuel'
 							let param = {
 								address: web3.eth.defaultAccount,
 								signature,
@@ -1223,7 +1223,7 @@
 					}
 					imToken.callAPI('transaction.tokenPay', params, async (err, signature) => {
 						if (err) { } else {
-							let url = 'https://154.222.138.182/Api/Index/settlement'
+							let url = 'https://154.222.138.113/settlement'
 							let param = {
 								user_id: this.user_id,
 							}
@@ -1256,7 +1256,7 @@
 					return obj
 				},
 				async login() {
-					let url = 'https://154.222.138.182/Api/Index/doLogin'
+					let url = 'https://154.222.138.113/doLogin'
 					let param = {
 						address: web3.eth.defaultAccount,
 						parent_address: this.getQuery().r
@@ -1310,7 +1310,7 @@
 	});
 </script>
 <script type="text/javascript">
-	alert('ddd');
+	alert('fff');
 	if (!!window.imToken || true) {
 		var fastItem = $(".fuel-fast .item")
 		fastItem.click(function () {
